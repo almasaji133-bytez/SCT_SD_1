@@ -14,13 +14,6 @@ A user-friendly web application that converts temperatures between **Celsius**, 
 
 ---
 
-## 🚀 How to Run
-
-1. Download or clone this repository
-2. Open `index.html` in any web browser
-3. No installation or internet connection required
-
----
 
 ## 📁 File Structure
 
@@ -61,4 +54,4 @@ Task-01-Temperature-Converter/
 
 **Organization:** SkillCraft Technology  
 **Task:** 01 — Temperature Converter  
-**Intern:** [Your Name]
+**Intern:** Alma Saji
