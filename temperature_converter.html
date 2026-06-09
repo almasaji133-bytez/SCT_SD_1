@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temperature Converter</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f1a;
+      color: #e0e0f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: #8888aa;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: #1a1a2e;
+      border: 1px solid #2a2a45;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .unit-selector {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.25rem;
+    }
+
+    .unit-btn {
+      flex: 1;
+      padding: 8px 0;
+      border: 1px solid #2a2a45;
+      border-radius: 10px;
+      background: transparent;
+      color: #8888aa;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .unit-btn:hover { border-color: #5555cc; color: #ccccff; }
+
+    .unit-btn.active {
+      background: #2a2a55;
+      border-color: #5555cc;
+      color: #aaaaff;
+      font-weight: 500;
+    }
+
+    .input-label {
+      font-size: 0.8rem;
+      color: #8888aa;
+      margin-bottom: 6px;
+    }
+
+    .temp-input {
+      width: 100%;
+      background: #11112a;
+      border: 1px solid #2a2a45;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #ffffff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .temp-input:focus { border-color: #5555cc; }
+    .temp-input::placeholder { color: #44445a; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #2a2a45;
+      margin: 1.25rem 0;
+    }
+
+    .results-label {
+      font-size: 0.8rem;
+      color: #8888aa;
+      margin-bottom: 0.75rem;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #1e1e38;
+      transition: opacity 0.2s;
+    }
+
+    .result-row:last-of-type { border-bottom: none; }
+
+    .result-row.source { opacity: 0.35; }
+
+    .result-unit {
+      font-size: 0.9rem;
+      color: #8888aa;
+    }
+
+    .result-value {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #aaaaff;
+    }
+
+    .formula-box {
+      background: #11112a;
+      border: 1px solid #2a2a45;
+      border-radius: 10px;
+      padding: 0.875rem 1rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #8888aa;
+      line-height: 1.8;
+      white-space: pre-line;
+      min-height: 60px;
+    }
+
+    .reset-btn {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #2a2a45;
+      border-radius: 10px;
+      background: transparent;
+      color: #8888aa;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .reset-btn:hover { border-color: #cc5555; color: #ffaaaa; }
+
+    footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: #44445a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌡️ Temperature Converter</h1>
+    <p class="subtitle">Convert between Celsius, Fahrenheit, and Kelvin</p>
+
+    <div class="card">
+      <p class="input-label">Convert from</p>
+      <div class="unit-selector">
+        <button class="unit-btn active" data-unit="C" onclick="selectUnit('C')">°C Celsius</button>
+        <button class="unit-btn" data-unit="F" onclick="selectUnit('F')">°F Fahrenheit</button>
+        <button class="unit-btn" data-unit="K" onclick="selectUnit('K')">K Kelvin</button>
+      </div>
+
+      <p class="input-label" id="inputLabel">Enter temperature in Celsius</p>
+      <input class="temp-input" type="number" id="tempInput" placeholder="e.g. 100" oninput="convert()" />
+
+      <hr class="divider" />
+
+      <p class="results-label">Converted values</p>
+
+      <div class="result-row" id="row-C">
+        <span class="result-unit">Celsius (°C)</span>
+        <span class="result-value" id="out-C">—</span>
+      </div>
+      <div class="result-row" id="row-F">
+        <span class="result-unit">Fahrenheit (°F)</span>
+        <span class="result-value" id="out-F">—</span>
+      </div>
+      <div class="result-row" id="row-K">
+        <span class="result-unit">Kelvin (K)</span>
+        <span class="result-value" id="out-K">—</span>
+      </div>
+
+      <div class="formula-box" id="formulaBox">Formulas will appear here once you enter a value.</div>
+    </div>
+
+    <button class="reset-btn" onclick="resetAll()">✕ Clear / Reset</button>
+
+    <footer>SkillCraft Technology — Task 01 | Built with HTML, CSS & JavaScript</footer>
+  </div>
+
+  <script>
+    let activeUnit = 'C';
+
+    function selectUnit(unit) {
+      activeUnit = unit;
+      document.querySelectorAll('.unit-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.unit === unit);
+      });
+      const labels = {
+        C: 'Enter temperature in Celsius',
+        F: 'Enter temperature in Fahrenheit',
+        K: 'Enter temperature in Kelvin'
+      };
+      document.getElementById('inputLabel').textContent = labels[unit];
+      document.getElementById('tempInput').value = '';
+      ['C','F','K'].forEach(u => document.getElementById('out-' + u).textContent = '—');
+      ['C','F','K'].forEach(u => document.getElementById('row-' + u).classList.remove('source'));
+      document.getElementById('formulaBox').textContent = 'Formulas will appear here once you enter a value.';
+    }
+
+    function fmt(n) {
+      return parseFloat(n.toFixed(4)).toString();
+    }
+
+    function convert() {
+      const raw = parseFloat(document.getElementById('tempInput').value);
+      if (isNaN(raw)) {
+        ['C','F','K'].forEach(u => document.getElementById('out-' + u).textContent = '—');
+        ['C','F','K'].forEach(u => document.getElementById('row-' + u).classList.remove('source'));
+        document.getElementById('formulaBox').textContent = 'Enter a valid number to see results.';
+        return;
+      }
+
+      let C, F, K;
+      if (activeUnit === 'C') {
+        C = raw; F = (raw * 9 / 5) + 32; K = raw + 273.15;
+      } else if (activeUnit === 'F') {
+        C = (raw - 32) * 5 / 9; F = raw; K = (raw - 32) * 5 / 9 + 273.15;
+      } else {
+        C = raw - 273.15; F = (raw - 273.15) * 9 / 5 + 32; K = raw;
+      }
+
+      document.getElementById('out-C').textContent = fmt(C) + ' °C';
+      document.getElementById('out-F').textContent = fmt(F) + ' °F';
+      document.getElementById('out-K').textContent = fmt(K) + ' K';
+
+      ['C','F','K'].forEach(u => {
+        document.getElementById('row-' + u).classList.toggle('source', u === activeUnit);
+      });
+
+      const formulas = {
+        C: `°F = (${raw} × 9/5) + 32  →  ${fmt(F)} °F\nK  = ${raw} + 273.15  →  ${fmt(K)} K`,
+        F: `°C = (${raw} − 32) × 5/9  →  ${fmt(C)} °C\nK  = (${raw} − 32) × 5/9 + 273.15  →  ${fmt(K)} K`,
+        K: `°C = ${raw} − 273.15  →  ${fmt(C)} °C\n°F = (${raw} − 273.15) × 9/5 + 32  →  ${fmt(F)} °F`
+      };
+      document.getElementById('formulaBox').textContent = formulas[activeUnit];
+    }
+
+    function resetAll() {
+      document.getElementById('tempInput').value = '';
+      ['C','F','K'].forEach(u => {
+        document.getElementById('out-' + u).textContent = '—';
+        document.getElementById('row-' + u).classList.remove('source');
+      });
+      document.getElementById('formulaBox').textContent = 'Formulas will appear here once you enter a value.';
+    }
+  </script>
+</body>
+</html>
