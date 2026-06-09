@@ -3,6 +3,10 @@
 A user-friendly web application that converts temperatures between **Celsius**, **Fahrenheit**, and **Kelvin** scales in real time.
 
 ---
+## 🌐 Live Demo
+👉 [Click here to view the app](https://your-username.github.io/your-repo-name/temperature_converter.html)
+
+---
 
 ## 🌡️ Features
 
