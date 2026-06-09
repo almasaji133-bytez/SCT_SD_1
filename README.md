@@ -4,7 +4,7 @@ A user-friendly web application that converts temperatures between **Celsius**, 
 
 ---
 ## 🌐 Live Demo
-👉 [Click here to view the app](https://your-username.github.io/your-repo-name/temperature_converter.html)
+👉 [Click here to view the app](https://almasaji133-bytez.github.io/SCT_SD_1/temperature_converter.html)
 
 ---
 
